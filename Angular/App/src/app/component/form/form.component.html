@@ -1,0 +1,71 @@
+<!--<form novalidate #fo="ngForm" (submit)="submit()">
+  <input type="text" class="form-control" name="fName" [(ngModel)]="fName" #FName="ngModel" required minlength="4">
+  <input type="text" class="form-control" name="lName" [(ngModel)]="lName" #LName="ngModel" required minlength="4">
+  <input type="text" class="form-control" name="age" [(ngModel)]="age" #Age="ngModel" required minlength="2">
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+
+<div *ngIf="FName.errors?.required && FName.touched">
+  <p class="alert alert-danger">Required</p>
+</div>-->
+
+
+<div class="container">
+
+
+  <form  #fo="ngForm" method="post" (submit)="submit(fo)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
+
+    <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="users.user">
+    <input type="text" placeholder="firstName" class="form-control col-sm-5" required="required" name="fName" [(ngModel)]="users.fName">
+    <input type="text" placeholder="lastName" class="form-control col-sm-5" required="required" name="lName" [(ngModel)]="users.lName">
+    <input type="email" placeholder="Email" class="form-control col-sm-5" required="required" name="email" [(ngModel)]="users.email">
+    <input type="password" placeholder="Password" class="form-control col-sm-5" required="required" name="password" [(ngModel)]="users.password">
+    <input type="text" placeholder="Job Title" class="form-control col-sm-5" required="required" name="job" [(ngModel)]="users.job">
+<!--
+    Add Image
+
+    <input type="file" name="photo" [(ngModel)]="users.photo">
+-->
+    <input type="text" id="mapLable" placeholder="location" class="form-control col-sm-5" name="location" [(ngModel)]="users.location">
+    <select name="status"  [(ngModel)]="users.status" class="form-control col-sm-5" >
+      <option value="1">Active</option>
+      <option value="0">DisActive</option>
+    </select>
+
+    <input type="submit" value="Add" class="btn btn-success">
+
+  </form>
+<!--
+  <ul>
+    <li *ngFor="let item of alluser">{{item.firstName}}</li>
+
+  </ul>-->
+
+
+  <div class="table-responsive text-center table-light">
+    <table class="main-table table table-bordered " >
+      <tr style="background-color:slategray ;
+    color: white;
+    text-align: center;">
+        <td>#First Name</td>
+        <td>#Last Name</td>
+        <td>#Username</td>
+        <td>#Mail</td>
+        <td>#Job Title</td>
+        <td>other</td>
+      </tr>
+      <tr *ngFor="let item2 of alluser2 ">
+        <td>{{item2.fName}}</td>
+        <td>{{item2.lName}}</td>
+        <td>{{item2.user}}</td>
+        <td>{{item2.email}}</td>
+        <td>{{item2.job}}</td>
+        </tr>
+      <td *ngFor="let item of alluser "><button (click)="delete(item.key)" class="btn btn-danger">Delete</button></td>
+
+    </table>
+  </div>
+
+
+</div>
