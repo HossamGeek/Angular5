@@ -13,7 +13,7 @@
 
 <div class="container">
 
-
+<div *ngIf="show">
   <form  #fo="ngForm" method="post" (submit)="submit(fo)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
 
     <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="users.user">
@@ -36,11 +36,6 @@
     <input type="submit" value="Add" class="btn btn-success col-sm-4">
 
   </form>
-<!--
-  <ul>
-    <li *ngFor="let item of alluser">{{item.firstName}}</li>
-
-  </ul>-->
 
 
   <div class="table-responsive text-center table-light">
@@ -63,15 +58,41 @@
         <td>{{item2.p.job}}</td>
         <td>
           <button (click)="delete(item2.k)" class="btn btn-danger">Delete</button>
-          <button (click)="Edit(item2.k)" class="btn btn-success">Edit</button>
+          <button (click)="Edit(item2.k,item2.p)" class="btn btn-success">Edit</button>
+
+          <button *ngIf="active == item2.p.status" (click)="Active(item2.k)" class="btn btn-primary">DicActive</button>
+          <button *ngIf="active != item2.p.status" (click)="DisActive(item2.k)" class="btn btn-primary">Active</button>
+
         </td>
         </tr>
-<!--
-      <td *ngFor="let item of alluser "><button (click)="delete(item.key)" class="btn btn-danger">Delete</button></td>
--->
 
     </table>
   </div>
+</div>
 
+  <div *ngIf="show == false">
+    <form  #fo="ngForm" method="post" (submit)="update(fo,users.key)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
+      <!--<input type="hidden"  name="key" [(ngModel)]="">-->
+      <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="users.user">
+      <input type="text" placeholder="firstName" class="form-control col-sm-5" required="required" name="fName" [(ngModel)]="users.fName">
+      <input type="text" placeholder="lastName" class="form-control col-sm-5" required="required" name="lName" [(ngModel)]="users.lName">
+      <input type="email" placeholder="Email" class="form-control col-sm-5" required="required" name="email" [(ngModel)]="users.email">
+      <input type="password" placeholder="Password" class="form-control col-sm-5" required="required" name="password" [(ngModel)]="users.password">
+      <input type="text" placeholder="Job Title" class="form-control col-sm-5" required="required" name="job" [(ngModel)]="users.job">
+      <!--
+          Add Image
+
+          <input type="file" name="photo" [(ngModel)]="users.photo">
+      -->
+      <input type="text"  placeholder="location" class="form-control col-sm-5" name="location" [(ngModel)]="users.location">
+      <select name="status"  [(ngModel)]="users.status" class="form-control col-sm-5" >
+        <option value="1">Active</option>
+        <option value="0">DisActive</option>
+      </select>
+
+      <input type="submit" value="Edit" class="btn btn-success col-sm-4">
+
+    </form>
+  </div>
 
 </div>

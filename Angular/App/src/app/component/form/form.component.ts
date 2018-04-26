@@ -21,6 +21,9 @@ import {getOverloadKey} from 'tslint/lib/rules/adjacentOverloadSignaturesRule';
 })
 export class FormComponent implements OnInit {
 
+
+  public show = true;
+  public active = 0;
   employess: AngularFireList<any>;
   employess1: AngularFireList<any>;
   allemp: Observable<any[]>;
@@ -79,6 +82,12 @@ export class FormComponent implements OnInit {
 
 
 
+
+/*
+  toggleButton(button: string): void {
+    this.showButtons[button] = !this.showButtons[button];
+  }
+*/
   submit({value, valid}) {
 
 
@@ -124,4 +133,47 @@ export class FormComponent implements OnInit {
     this.employess.remove(value);
   }
 
+  Edit(k: string, p: Employee) {
+    this.show = false;
+    console.log(k);
+    this.users.key = k;
+    this.users.user =  p.user;
+    this.users.fName = p.fName;
+    this.users.lName = p.lName;
+    this.users.email = p.email;
+    this.users.password = '';
+    this.users.job = p.job;
+    this.users.photo = '';
+    this.users.location = p.location;
+    this.users.status = p.status;
+  }
+
+
+  update({value}, k) {
+    this.userdb = value;
+
+    this.employess.update(k, this.userdb );
+    this.show = true;
+    this.users.user =  '';
+    this.users.fName = '';
+    this.users.lName = '';
+    this.users.email = '';
+    this.users.password = '';
+    this.users.job = '';
+    this.users.photo = '';
+    this.users.location = '';
+    this.users.status = 0;
+
+  }
+
+  Active(k) {
+    console.log(k);
+     this.employess.update(k, {status: 1});
+
+  }
+  DisActive(k) {
+
+  this.employess.update(k, {status: 0});
+
+}
 }

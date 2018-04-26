@@ -36,7 +36,7 @@ import { FirecomponentComponent } from './firecomponent/firecomponent.component'
 const approutes: Routes = [
   {path: 'test/:id' , component : TestComponent},
   {path: 'add' , component : FormComponent},
-  {path: 'fire' , component : FirecomponentComponent }
+  {path: 'fire' , component : FirecomponentComponent },
 ];
 
 
