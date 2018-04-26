@@ -33,7 +33,7 @@
       <option value="0">DisActive</option>
     </select>
 
-    <input type="submit" value="Add" class="btn btn-success">
+    <input type="submit" value="Add" class="btn btn-success col-sm-4">
 
   </form>
 <!--
@@ -55,14 +55,20 @@
         <td>#Job Title</td>
         <td>other</td>
       </tr>
-      <tr *ngFor="let item2 of alluser2 ">
-        <td>{{item2.fName}}</td>
-        <td>{{item2.lName}}</td>
-        <td>{{item2.user}}</td>
-        <td>{{item2.email}}</td>
-        <td>{{item2.job}}</td>
+      <tr *ngFor="let item2 of alluser ">
+        <td>{{item2.p.fName}}</td>
+        <td>{{item2.p.lName}}</td>
+        <td>{{item2.p.user}}</td>
+        <td>{{item2.p.email}}</td>
+        <td>{{item2.p.job}}</td>
+        <td>
+          <button (click)="delete(item2.k)" class="btn btn-danger">Delete</button>
+          <button (click)="Edit(item2.k)" class="btn btn-success">Edit</button>
+        </td>
         </tr>
+<!--
       <td *ngFor="let item of alluser "><button (click)="delete(item.key)" class="btn btn-danger">Delete</button></td>
+-->
 
     </table>
   </div>
