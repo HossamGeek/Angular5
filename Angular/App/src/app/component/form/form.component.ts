@@ -6,6 +6,7 @@ import {AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {Employee} from '../interfaces/Employee';
 import 'rxjs/add/operator/map';
+
 import {FirebaseObjectObservable, FirebaseListObservable} from 'angularfire2/database-deprecated';
 import * as firebase from 'firebase';
 import {hasKey} from 'angularfire2/database-deprecated/utils';

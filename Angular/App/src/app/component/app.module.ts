@@ -30,6 +30,7 @@ import { AppComponent } from './nav/app.component';
 import { FormComponent } from './form/form.component';
 import { TestComponent } from './test/test.component';
 import { FirecomponentComponent } from './firecomponent/firecomponent.component';
+import { ApiComponent } from './api/api.component';
 
 
 /*router*/
@@ -37,6 +38,7 @@ const approutes: Routes = [
   {path: 'test/:id' , component : TestComponent},
   {path: 'add' , component : FormComponent},
   {path: 'fire' , component : FirecomponentComponent },
+  {path: 'api' , component : ApiComponent },
 ];
 
 
@@ -56,6 +58,7 @@ export const firebaseConfig = {
     FormComponent,
     TestComponent,
     FirecomponentComponent,
+    ApiComponent,
   ],
   imports: [
     BrowserModule,

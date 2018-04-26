@@ -1,0 +1,46 @@
+<div class="container">
+
+
+    <form  #fo="ngForm" method="post" (submit)="submit(fo)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
+
+      <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="alluser.user">
+      <input type="text" placeholder="firstName" class="form-control col-sm-5" required="required" name="fName" [(ngModel)]="alluser.fName">
+      <input type="text" placeholder="lastName" class="form-control col-sm-5" required="required" name="lName" [(ngModel)]="alluser.lName">
+      <input type="email" placeholder="Email" class="form-control col-sm-5" required="required" name="email" [(ngModel)]="alluser.email">
+      <input type="password" placeholder="Password" class="form-control col-sm-5" required="required" name="password" [(ngModel)]="alluser.password">
+      <input type="text" placeholder="Job Title" class="form-control col-sm-5" required="required" name="job" [(ngModel)]="alluser.job">
+      <!--
+          Add Image
+
+          <input type="file" name="photo" [(ngModel)]="users.photo">
+      -->
+      <input type="text" id="mapLable" placeholder="location" class="form-control col-sm-5" name="location" [(ngModel)]="alluser.location">
+      <select name="status"  [(ngModel)]="alluser.status" class="form-control col-sm-5" >
+        <option value="1">Active</option>
+        <option value="0">DisActive</option>
+      </select>
+
+      <input type="submit" value="Add" class="btn btn-success col-sm-4">
+
+    </form>
+
+
+    <div class="table-responsive text-center table-light">
+      <table class="main-table table table-bordered " >
+        <tr style="background-color:slategray ;
+    color: white;
+    text-align: center;">
+          <td>#First Name</td>
+          <td>#Last Name</td>
+          <td>#Job Title</td>
+          <td>other</td>
+        </tr>
+        <tr *ngFor="let item2 of alluser ">
+          <td>{{item2.firstName}}</td>
+          <td>{{item2.lastName}}</td>
+          <td>{{item2.job}}</td>
+        </tr>
+
+      </table>
+    </div>
+  </div>

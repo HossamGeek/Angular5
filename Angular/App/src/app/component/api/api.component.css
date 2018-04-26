@@ -1,0 +1,9 @@
+.Add-Form input{
+  display: block;
+  margin-bottom: 15px;
+}
+.Add-Form input[type=submit]{
+  display: block;
+  margin-top: 15px;
+  margin-left: 30px;
+}
