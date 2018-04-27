@@ -24,13 +24,20 @@ export class FormComponent implements OnInit {
 
 
   public show = true;
+
   public active = 0;
+
   employess: AngularFireList<any>;
-  employess1: AngularFireList<any>;
   allemp: Observable<any[]>;
+
+  userdb: Employee;
+  alluser: Employee[];
+
+  /*
+  employess1: AngularFireList<any>;
   allempdata: Observable<any[]>;
   item: Observable<Employee[]>;
-  pushUser = {};
+  */
 
   users: Employee = {
     key: '',
@@ -44,19 +51,16 @@ export class FormComponent implements OnInit {
     location: '',
     status: 0
 };
-  userdb: Employee;
 
-  alluser: Employee[];
-  alluser2: Employee[];
-  constructor(public  dataService: DataServiceService, public db: AngularFireDatabase ) {
-    /*this.dataService.getUser().subscribe(alluser => {
-      this.alluser = alluser;
-    });*/
+
+
+  constructor(public db: AngularFireDatabase ) {
 
         this.employess =  db.list('/employees') ;
 
         this.allemp = this.employess.snapshotChanges().map(actions => {
 
+/*          getdata From Firebase         */
           return actions.map(a => {
             const k = a.payload.key.toString();
             const p = a.payload.toJSON();
@@ -69,7 +73,9 @@ export class FormComponent implements OnInit {
             console.log(this.alluser);
           });
 
-        /*this.allempdata = this.employess.valueChanges();
+        /*
+        //Other Way
+        this.allempdata = this.employess.valueChanges();
 */
 
 /*          this.allempdata.forEach(element => {
@@ -84,35 +90,12 @@ export class FormComponent implements OnInit {
 
 
 
-/*
-  toggleButton(button: string): void {
-    this.showButtons[button] = !this.showButtons[button];
-  }
-*/
   submit({value, valid}) {
+     /*push data to firebase*/
 
+      this.userdb = value;
 
-/* By Api
-    this.pushUser = value;
-*/
-/*
-
-     this.dataService.postUser(this.pushUser).subscribe(alluser => {
-      this.alluser.push(this.pushUser);
-    });
-
-    this.dataService.getUser().subscribe(alluser => {
-      this.alluser = alluser;
-    });
-
-*/
-
-
-  this.userdb = value;
-
-
-
-    this.employess.push(this.userdb);
+      this.employess.push(this.userdb);
 
       this.users.user =  '';
       this.users.fName = '';
@@ -123,9 +106,6 @@ export class FormComponent implements OnInit {
       this.users.photo = '';
       this.users.location = '';
       this.users.status = 0;
-
-
-
 
   }
 

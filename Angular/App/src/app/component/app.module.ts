@@ -29,7 +29,6 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import { AppComponent } from './nav/app.component';
 import { FormComponent } from './form/form.component';
 import { TestComponent } from './test/test.component';
-import { FirecomponentComponent } from './firecomponent/firecomponent.component';
 import { ApiComponent } from './api/api.component';
 
 
@@ -37,7 +36,6 @@ import { ApiComponent } from './api/api.component';
 const approutes: Routes = [
   {path: 'test/:id' , component : TestComponent},
   {path: 'add' , component : FormComponent},
-  {path: 'fire' , component : FirecomponentComponent },
   {path: 'api' , component : ApiComponent },
 ];
 
@@ -57,8 +55,7 @@ export const firebaseConfig = {
     AppComponent,
     FormComponent,
     TestComponent,
-    FirecomponentComponent,
-    ApiComponent,
+    ApiComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +77,6 @@ export const firebaseConfig = {
     AppComponent,
     FormComponent,
     TestComponent,
-    FirecomponentComponent
   ]
 })
 export class AppModule { }

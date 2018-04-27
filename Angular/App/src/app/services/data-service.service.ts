@@ -23,16 +23,33 @@ export class DataServiceService {
 
     const options = new RequestOptions({ headers: headers });
 
-    return this.http.get('http://127.0.0.1:8000/api/employee', options).map(res => res.json());
+    return this.http.get('http://127.0.0.1:3233/api/employee', options).map(res => res.json());
   }
 
   postUser(user) {
-    return this.http.post('http://127.0.0.1:8000/api/employee', user).map(res => res.json());
+    return this.http.post('http://127.0.0.1:3233/api/employee', user).map(res => res.json());
+  }
+  deleteUser(user) {
+    return this.http.post('http://127.0.0.1:3233/api/employee/Delete', user)
+      .map(res => res.json());
   }
 
-
-
-
+  activeUser(user) {
+    return this.http.post('http://127.0.0.1:3233/api/employee/active', user)
+      .map(res => res.json());
+  }
+  disActiveUser(user) {
+    return this.http.post('http://127.0.0.1:3233/api/employee/disactive', user)
+      .map(res => res.json());
+  }
+  getUserbyid(user) {
+    return this.http.post('http://127.0.0.1:3233/api/employee/edit', user)
+      .map(res => res.json());
+  }
+  updateUser(user) {
+    return this.http.post('http://127.0.0.1:3233/api/employee/update', user)
+      .map(res => res.json());
+  }
 }
 
 
