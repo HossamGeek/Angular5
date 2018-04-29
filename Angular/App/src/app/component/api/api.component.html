@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="show">
+  <div *ngIf="showAdd == true">
 
     <form  #fo="ngForm" method="post" (submit)="submit(fo)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
 
@@ -25,37 +25,11 @@
     </form>
 
 
-    <div class="table-responsive text-center table-light">
-      <table class="main-table table table-bordered " >
-        <tr style="background-color:slategray ;
-    color: white;
-    text-align: center;">
-          <td>#First Name</td>
-          <td>#Last Name</td>
-          <td>#Job Title</td>
-          <td>other</td>
-        </tr>
-        <tr *ngFor="let item2 of alluser ">
-          <td>{{item2.firstName}}</td>
-          <td>{{item2.lastName}}</td>
-          <td>{{item2.jobTitle}}</td>
-          <td> <button (click)="delete(item2.id,item2.user_id,item2)" class="btn btn-danger">Delete</button>
-            <button (click)="Edit(item2.id,item2.user_id,item2)" class="btn btn-success">Edit</button>
-
-            <button *ngIf="active == item2.status" (click)="DisActive(item2.id,item2)" class="btn btn-primary">DicActive</button>
-            <button *ngIf="active != item2.status" (click)="Active(item2.id,item2)" class="btn btn-primary">Active</button>
-
-          </td>
-        </tr>
-
-      </table>
-    </div>
 
   </div>
 
 
   <div *ngIf="show == false">
-    <div *ngIf="updated == true" class="alert alert-success offset-4 col-md-6"> updated</div>
     <form  #fo="ngForm" method="post" (submit)="update(fo,Newuser.id,Newuser.user_id)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
       <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="Newuser.user">
       <input type="text" placeholder="firstName" class="form-control col-sm-5" required="required" name="fName" [(ngModel)]="Newuser.fName">
@@ -78,6 +52,38 @@
 
     </form>
   </div>
+
+
+      <div *ngIf="showAdd == false && show == true ">
+        <div class="table-responsive text-center table-light table-user">
+          <table class="main-table table table-bordered " >
+            <tr style="background-color:slategray ;
+          color: white;
+          text-align: center;">
+              <td>#First Name</td>
+              <td>#Last Name</td>
+              <td>#Job Title</td>
+              <td>other</td>
+            </tr>
+            <tr *ngFor="let item2 of alluser ">
+              <td>{{item2.firstName}}</td>
+              <td>{{item2.lastName}}</td>
+              <td>{{item2.jobTitle}}</td>
+              <td> <button (click)="delete(item2.id,item2.user_id,item2)" class="btn btn-danger">Delete</button>
+                <button (click)="Edit(item2.id,item2.user_id,item2)" class="btn btn-success">Edit</button>
+
+                <button *ngIf="active == item2.status" (click)="DisActive(item2.id,item2)" class="btn btn-primary">DicActive</button>
+                <button *ngIf="active != item2.status" (click)="Active(item2.id,item2)" class="btn btn-primary">Active</button>
+
+              </td>
+            </tr>
+
+          </table>
+        </div>
+        <button class="btn btn-success col-sm-3 btnAdd" (click)="showAdd = true"><span class="plus">+</span> Add</button>
+
+      </div>
+
 
 
 

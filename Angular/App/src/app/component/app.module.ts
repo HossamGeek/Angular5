@@ -24,12 +24,18 @@ import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuth} from 'angularfire2/auth';
 
+/*toaster*/
+import {ToastModule} from 'ng2-toastr';
+
+import {ToastOptions} from 'ng2-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 /*component*/
 
 import { AppComponent } from './nav/app.component';
 import { FormComponent } from './form/form.component';
 import { TestComponent } from './test/test.component';
 import { ApiComponent } from './api/api.component';
+import {CustomToastOption} from './custom-toast-option';
 
 
 /*router*/
@@ -38,6 +44,10 @@ const approutes: Routes = [
   {path: 'add' , component : FormComponent},
   {path: 'api' , component : ApiComponent },
 ];
+/*
+{ path: 'Home', loadChildren:()=> System.import('./Home').then((comp: any) => comp.default) },
+to route a new module
+*/
 
 
 /*configration with firebase */
@@ -66,12 +76,18 @@ export const firebaseConfig = {
     HttpModule,
     FileUploadModule,
     RouterModule.forRoot(approutes),
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    ToastModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     DataServiceService,
     AngularFireDatabase,
-    AngularFireAuth
+    AngularFireAuth,
+    {
+      provide: ToastOptions,
+      useClass: CustomToastOption
+    }
   ],
   bootstrap: [
     AppComponent,

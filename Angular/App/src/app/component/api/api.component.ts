@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {DataServiceService } from '../../services/data-service.service';
 import {Employee} from '../interfaces/Employee';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'app-api',
@@ -10,7 +11,7 @@ import {Employee} from '../interfaces/Employee';
 export class ApiComponent implements OnInit {
   public active = 0;
   public show = true;
-  public updated = false;
+  public showAdd = false;
 
   pushUser = {};
   Newuser: Employee = {
@@ -19,10 +20,12 @@ export class ApiComponent implements OnInit {
   };
   alluser: any[];
 
-  constructor(public  dataService: DataServiceService) {
+  constructor(public  dataService: DataServiceService,
+              public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.dataService.getUser().subscribe(alluser => {
       this.alluser = alluser;
     });
+    this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
@@ -33,21 +36,27 @@ export class ApiComponent implements OnInit {
 
          this.dataService.postUser(this.pushUser).subscribe(alluser => {
           this.alluser.push(this.pushUser);
-        });
+           this.toastr.success(null, 'Added!', {toastLife: 2500});
+           this.Newuser.user =  '';
+           this.Newuser.fName = '';
+           this.Newuser.lName = '';
+           this.Newuser.email = '';
+           this.Newuser.password = '';
+           this.Newuser.job = '';
+           this.Newuser.photo = '';
+           this.Newuser.location = '';
+           this.Newuser.status = 0;
+         });
 
         this.dataService.getUser().subscribe(alluser => {
           this.alluser = alluser;
+
+          setTimeout(() => {
+            this.showAdd = false;
+          }, 2500 );
         });
 
-    this.Newuser.user =  '';
-    this.Newuser.fName = '';
-    this.Newuser.lName = '';
-    this.Newuser.email = '';
-    this.Newuser.password = '';
-    this.Newuser.job = '';
-    this.Newuser.photo = '';
-    this.Newuser.location = '';
-    this.Newuser.status = 0;
+
 
   }
   delete(id: number, useid: string, emp: Employee) {
@@ -57,7 +66,10 @@ export class ApiComponent implements OnInit {
     };
     this.dataService.deleteUser(data).subscribe(alluser => {
       this.alluser.splice(this.alluser.indexOf(emp), 1);
+
     });
+    this.toastr.error(null, 'Deleted!', {toastLife: 1500});
+
     this.alluser.splice(this.alluser.indexOf(emp), 1);
   }
 
@@ -120,10 +132,6 @@ export class ApiComponent implements OnInit {
     console.log(data);
     this.dataService.updateUser(data).subscribe(alluser => {
       console.log(alluser);
-    });
-    this.dataService.getUser().subscribe(alluser => {
-      this.alluser = alluser;
-      this.updated = true;
       this.Newuser.user =  '';
       this.Newuser.fName = '';
       this.Newuser.lName = '';
@@ -133,7 +141,13 @@ export class ApiComponent implements OnInit {
       this.Newuser.photo = '';
       this.Newuser.location = '';
       this.Newuser.status = 0;
+      this.toastr.success(null, 'Updated!', {toastLife: 2500});
+
+    });
+    this.dataService.getUser().subscribe(alluser => {
+      this.alluser = alluser;
     /*  this.show = true;*/
+
       setTimeout(() => {
         this.show = true;
       }, 2500 );
