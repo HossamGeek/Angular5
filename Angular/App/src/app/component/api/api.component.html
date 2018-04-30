@@ -1,21 +1,23 @@
+<script src="../../../../../../../Ang2/AppAng/src/app/Component/student/student.component.ts"></script>
 <div class="container">
+
   <div *ngIf="showAdd == true">
 
-    <form  #fo="ngForm" method="post" (submit)="submit(fo)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
+    <form novalidate #fo="ngForm" method="post" (submit)="submit(fo)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
 
-      <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="Newuser.user">
-      <input type="text" placeholder="firstName" class="form-control col-sm-5" required="required" name="fName" [(ngModel)]="Newuser.fName">
-      <input type="text" placeholder="lastName" class="form-control col-sm-5" required="required" name="lName" [(ngModel)]="Newuser.lName">
-      <input type="email" placeholder="Email" class="form-control col-sm-5" required="required" name="email" [(ngModel)]="Newuser.email">
-      <input type="password" placeholder="Password" class="form-control col-sm-5" required="required" name="password" [(ngModel)]="Newuser.password">
-      <input type="text" placeholder="Job Title" class="form-control col-sm-5" required="required" name="job" [(ngModel)]="Newuser.job">
+      <input type="text" placeholder="userName"  #usr="ngModel" [ngClass]="{'errinput' :errform == true}"  class="form-control col-sm-5" name="user" required minlength="5" maxlength="10" [(ngModel)]="Newuser.user">
+      <input type="text" placeholder="firstName" class="form-control col-sm-5" [ngClass]="{'errinput' :errform == true}" required  minlength="3" maxlength="10" name="fName" [(ngModel)]="Newuser.fName">
+      <input type="text" placeholder="lastName" class="form-control col-sm-5"  [ngClass]="{'errinput' :errform == true}" required minlength="3" maxlength="10" name="lName" [(ngModel)]="Newuser.lName">
+      <input type="email" placeholder="Email" class="form-control col-sm-5" [ngClass]="{'errinput' :errform == true}" required name="email" [(ngModel)]="Newuser.email">
+      <input type="password" placeholder="Password" class="form-control col-sm-5" [ngClass]="{'errinput' :errform == true}" required name="password" [(ngModel)]="Newuser.password">
+      <input type="text" placeholder="Job Title" class="form-control col-sm-5" [ngClass]="{'errinput' :errform == true}" required name="job" [(ngModel)]="Newuser.job">
       <!--
           Add Image
 
           <input type="file" name="photo" [(ngModel)]="users.photo">
       -->
-      <input type="text" id="mapLable" placeholder="location" class="form-control col-sm-5" name="location" [(ngModel)]="Newuser.location">
-      <select name="status"  [(ngModel)]="Newuser.status" class="form-control col-sm-5" >
+      <input type="text" id="mapLable" placeholder="location" class="form-control col-sm-5"  [ngClass]="{'errinput' :errform == true}" required name="location" [(ngModel)]="Newuser.location">
+      <select name="status" required [(ngModel)]="Newuser.status" class="form-control col-sm-5" [ngClass]="{'errinput' :errform == true}" >
         <option value="1">Active</option>
         <option value="0">DisActive</option>
       </select>
@@ -28,21 +30,21 @@
 
   </div>
 
-
+<!--Edit-->
   <div *ngIf="show == false">
     <form  #fo="ngForm" method="post" (submit)="update(fo,Newuser.id,Newuser.user_id)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
-      <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="Newuser.user">
-      <input type="text" placeholder="firstName" class="form-control col-sm-5" required="required" name="fName" [(ngModel)]="Newuser.fName">
-      <input type="text" placeholder="lastName" class="form-control col-sm-5" required="required" name="lName" [(ngModel)]="Newuser.lName">
-      <input type="email" placeholder="Email" class="form-control col-sm-5" required="required" name="email" [(ngModel)]="Newuser.email">
-      <input type="password" placeholder="Password" class="form-control col-sm-5" required="required" name="password" [(ngModel)]="Newuser.password">
-      <input type="text" placeholder="Job Title" class="form-control col-sm-5" required="required" name="job" [(ngModel)]="Newuser.job">
+      <input type="text" placeholder="userName"  [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" name="user" required [(ngModel)]="Newuser.user">
+      <input type="text" placeholder="firstName" [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" required name="fName" [(ngModel)]="Newuser.fName">
+      <input type="text" placeholder="lastName" [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" required name="lName" [(ngModel)]="Newuser.lName">
+      <input type="email" placeholder="Email"  [ngClass]="{'errinput' :errform == true}"  class="form-control col-sm-5" required name="email" [(ngModel)]="Newuser.email">
+      <input type="password" placeholder="Password" [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" required name="password" [(ngModel)]="Newuser.password">
+      <input type="text" placeholder="Job Title" [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" required name="job" [(ngModel)]="Newuser.job">
       <!--
           Add Image
 
           <input type="file" name="photo" [(ngModel)]="users.photo">
       -->
-      <input type="text" placeholder="location" class="form-control col-sm-5" name="location" [(ngModel)]="Newuser.location">
+      <input type="text" placeholder="location" required class="form-control col-sm-5" name="location" [(ngModel)]="Newuser.location">
       <select name="status"  [(ngModel)]="Newuser.status" class="form-control col-sm-5" >
         <option value="1">Active</option>
         <option value="0">DisActive</option>
@@ -54,7 +56,37 @@
   </div>
 
 
-      <div *ngIf="showAdd == false && show == true ">
+  <!--Details-->
+
+  <div *ngIf="showdetails == true">
+    <div class="alert alert-success col-sm-5 offset-4 text-center">Details</div>
+    <form  #fo="ngForm" method="post" (submit)="update(fo,Newuser.id,Newuser.user_id)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
+      <input type="text" disabled placeholder="userName"  [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" name="user" required="required" [(ngModel)]="Newuser.user">
+      <input type="text" disabled placeholder="firstName" [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" required="required" name="fName" [(ngModel)]="Newuser.fName">
+      <input type="text" disabled placeholder="lastName" [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" required="required" name="lName" [(ngModel)]="Newuser.lName">
+      <input type="email" disabled placeholder="Email"  [ngClass]="{'errinput' :errform == true}"  class="form-control col-sm-5" required="required" name="email" [(ngModel)]="Newuser.email">
+      <input type="text" disabled placeholder="Job Title" [ngClass]="{'errinput' :errform == true}"   class="form-control col-sm-5" required="required" name="job" [(ngModel)]="Newuser.job">
+      <!--
+          Add Image
+
+          <input type="file" name="photo" [(ngModel)]="users.photo">
+      -->
+      <input type="text" disabled placeholder="location" class="form-control col-sm-5" name="location" [(ngModel)]="Newuser.location">
+      <input type="text" disabled placeholder="status" name="status" disabled *ngIf="Newuser.status == 0" value="Disactive" class="form-control col-sm-5">
+      <input type="text" disabled placeholder="status" name="status" disabled *ngIf="Newuser.status == 1" value="active" class="form-control col-sm-5">
+
+    </form>
+    <button class="btn btn-info offset-6" (click)="showdetails = false">Back</button>
+  </div>
+
+
+
+
+
+  <div *ngIf="errorcon == false && wait == true" class="alert alert-success text-center offset-2 col-sm-8">Waiting</div>
+
+  <div *ngIf="errorcon == true && wait == false" class="alert alert-danger text-center  offset-2 col-sm-8">Connection With Api faild!</div>
+      <div *ngIf="showAdd == false && show == true && showdetails == false && errorcon == false && wait == false">
         <div class="table-responsive text-center table-light table-user">
           <table class="main-table table table-bordered " >
             <tr style="background-color:slategray ;
@@ -69,7 +101,9 @@
               <td>{{item2.firstName}}</td>
               <td>{{item2.lastName}}</td>
               <td>{{item2.jobTitle}}</td>
-              <td> <button (click)="delete(item2.id,item2.user_id,item2)" class="btn btn-danger">Delete</button>
+              <td>
+                <button (click)="Details(item2.id,item2.user_id,item2)" class="btn btn-info">Details</button>
+                <button (click)="delete(item2.id,item2.user_id,item2)" class="btn btn-danger">Delete</button>
                 <button (click)="Edit(item2.id,item2.user_id,item2)" class="btn btn-success">Edit</button>
 
                 <button *ngIf="active == item2.status" (click)="DisActive(item2.id,item2)" class="btn btn-primary">DicActive</button>

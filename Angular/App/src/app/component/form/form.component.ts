@@ -24,8 +24,13 @@ export class FormComponent implements OnInit {
 
 
   public show = true;
-
+  public errorconc = false;
+  public waiting = true;
   public active = 0;
+  public edited = false;
+
+  private baseUrl = 'http://www.test.com';
+  private isOnline = false;
 
   employess: AngularFireList<any>;
   allemp: Observable<any[]>;
@@ -56,7 +61,10 @@ export class FormComponent implements OnInit {
 
   constructor(public db: AngularFireDatabase ) {
 
-        this.employess =  db.list('/employees') ;
+
+    this.onlineCheck();
+
+    this.employess =  db.list('/employees') ;
 
         this.allemp = this.employess.snapshotChanges().map(actions => {
 
@@ -67,6 +75,15 @@ export class FormComponent implements OnInit {
             return {k, p};
           });
 
+        });
+
+        if (this.allemp == null) {
+          console.log('error');
+        }
+        this.allemp.subscribe(element => { console.log('hello');
+          this.show = true;
+          this.errorconc = false;
+          this.waiting = false;
         });
           this.allemp.forEach(element => {
             this.alluser = element;
@@ -89,6 +106,33 @@ export class FormComponent implements OnInit {
 
 
 
+  onlineCheck() {
+    const xhr = new XMLHttpRequest();
+    return new Promise((resolve, reject) => {
+      xhr.onload = () => {
+        // Set online status
+        this.isOnline = true;
+        this.show = true;
+        this.errorconc = false;
+        this.waiting = false;
+
+        resolve(true);
+        console.log('sucsses conc');
+      };
+      xhr.onerror = () => {
+        // Set online status
+        this.isOnline = false;
+        this.show = false;
+        this.errorconc = true;
+        this.waiting = false;
+
+        reject(false);
+        console.log('error conc');
+      };
+      xhr.open('GET', this.baseUrl, true);
+      xhr.send();
+    });
+  }
 
   submit({value, valid}) {
      /*push data to firebase*/
@@ -116,6 +160,7 @@ export class FormComponent implements OnInit {
 
   Edit(k: string, p: Employee) {
     this.show = false;
+    this.edited = true;
     console.log(k);
     this.users.key = k;
     this.users.user =  p.user;

@@ -41,8 +41,10 @@ import {CustomToastOption} from './custom-toast-option';
 /*router*/
 const approutes: Routes = [
   {path: 'test/:id' , component : TestComponent},
+  {path: 'employee', children: [
   {path: 'add' , component : FormComponent},
-  {path: 'api' , component : ApiComponent },
+  {path: 'api' , component : ApiComponent }
+  ]}
 ];
 /*
 { path: 'Home', loadChildren:()=> System.import('./Home').then((comp: any) => comp.default) },

@@ -12,8 +12,9 @@
 
 
 <div class="container">
-
-<div *ngIf="show">
+<div *ngIf="errorconc == true" class="alert alert-danger text-center offset-2 col-sm-8">Connection faild</div>
+<div *ngIf="waiting == true" class="alert alert-success text-center offset-2 col-sm-8">Waiting</div>
+  <div *ngIf="show == true && errorconc == false && waiting == false">
   <form  #fo="ngForm" method="post" (submit)="submit(fo)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
 
     <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="users.user">
@@ -70,7 +71,7 @@
   </div>
 </div>
 
-  <div *ngIf="show == false">
+  <div *ngIf="show == false && edited == true">
     <form  #fo="ngForm" method="post" (submit)="update(fo,users.key)" class="Add-Form" style="margin-left: 40%" enctype="multipart/form-data">
       <!--<input type="hidden"  name="key" [(ngModel)]="">-->
       <input type="text" placeholder="userName" class="form-control col-sm-5" name="user" required="required" [(ngModel)]="users.user">

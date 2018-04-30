@@ -23,3 +23,16 @@
   top: 70px;
   right: 12px;
 }
+
+.alert{
+  margin-top:15px;
+}
+.errinput {
+border: 2px solid #ff314b;
+}
+input.ng-valid {
+ border: 2px solid #37b129;
+}
+select.ng-valid{
+  border: 2px solid #37b129;
+}

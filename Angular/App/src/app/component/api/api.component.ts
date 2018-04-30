@@ -9,9 +9,14 @@ import { ToastsManager } from 'ng2-toastr';
   styleUrls: ['./api.component.css']
 })
 export class ApiComponent implements OnInit {
+
   public active = 0;
   public show = true;
   public showAdd = false;
+  public errorcon = false;
+  public wait = true;
+  public errform = false;
+  public showdetails = false;
 
   pushUser = {};
   Newuser: Employee = {
@@ -23,7 +28,14 @@ export class ApiComponent implements OnInit {
   constructor(public  dataService: DataServiceService,
               public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.dataService.getUser().subscribe(alluser => {
+      this.wait = false;
+      this.errorcon = false;
+
       this.alluser = alluser;
+    }, err => {
+      this.wait = false;
+      this.errorcon = true;
+
     });
     this.toastr.setRootViewContainerRef(vcr);
   }
@@ -32,32 +44,36 @@ export class ApiComponent implements OnInit {
   }
   submit({value, valid}) {
 
-        this.pushUser = value;
+    if (valid) {
+      this.errform = false;
+      this.pushUser = value;
 
-         this.dataService.postUser(this.pushUser).subscribe(alluser => {
-          this.alluser.push(this.pushUser);
-           this.toastr.success(null, 'Added!', {toastLife: 2500});
-           this.Newuser.user =  '';
-           this.Newuser.fName = '';
-           this.Newuser.lName = '';
-           this.Newuser.email = '';
-           this.Newuser.password = '';
-           this.Newuser.job = '';
-           this.Newuser.photo = '';
-           this.Newuser.location = '';
-           this.Newuser.status = 0;
-         });
+      this.dataService.postUser(this.pushUser).subscribe(alluser => {
+        this.alluser.push(this.pushUser);
+        this.toastr.success(null, 'Added!', {toastLife: 2500});
+        this.Newuser.user = '';
+        this.Newuser.fName = '';
+        this.Newuser.lName = '';
+        this.Newuser.email = '';
+        this.Newuser.password = '';
+        this.Newuser.job = '';
+        this.Newuser.photo = '';
+        this.Newuser.location = '';
+        this.Newuser.status = 0;
+      });
 
-        this.dataService.getUser().subscribe(alluser => {
-          this.alluser = alluser;
+      this.dataService.getUser().subscribe(alluser => {
+        this.alluser = alluser;
 
-          setTimeout(() => {
-            this.showAdd = false;
-          }, 2500 );
-        });
+        setTimeout(() => {
+          this.showAdd = false;
+        }, 2500);
+      });
 
 
-
+    } else {
+      this.errform = true;
+    }
   }
   delete(id: number, useid: string, emp: Employee) {
     const data = {
@@ -75,11 +91,14 @@ export class ApiComponent implements OnInit {
 
 
   Active(id: number, emp: Employee) {
+
     const data = {
       id: id
     };
     this.dataService.activeUser(data).subscribe(alluser => {});
     emp.status = 0;
+    this.toastr.info('DisActivted', null, {enableHTML: true , toastLife: 1500 });
+
   }
 
   DisActive(id: number, emp: Employee) {
@@ -90,6 +109,8 @@ export class ApiComponent implements OnInit {
     this.dataService.disActiveUser(data).subscribe(alluser => {});
 
     emp.status = 1;
+    this.toastr.info('Activted', null, {enableHTML: true , toastLife: 1500 });
+
   }
 
 
@@ -114,8 +135,36 @@ export class ApiComponent implements OnInit {
     });
 
 }
-  update({value}, id: number , user_id: string) {
 
+  Details(empid: number, userid: string ) {
+    this.showdetails = true;
+    const data = {
+      id: empid,
+      userid: userid
+    };
+    this.dataService.getUserbyid(data).subscribe(alluser => {
+      this.Newuser.id = alluser[0].id;
+      this.Newuser.user_id = alluser[0].user_id;
+      this.Newuser.user =  alluser[1].name;
+      this.Newuser.fName = alluser[0].firstName;
+      this.Newuser.lName = alluser[0].lastName;
+      this.Newuser.email = alluser[1].email;
+      this.Newuser.password = '';
+      this.Newuser.job = alluser[0].jobTitle;
+      this.Newuser.photo = alluser[0].image;
+      this.Newuser.location = alluser[0].lang;
+
+        this.Newuser.status  = alluser[0].status;
+
+    });
+
+  }
+
+
+
+  update({value, valid}, id: number , user_id: string) {
+
+    if (valid) {
     const data = {
       id: id,
       userid: user_id,
@@ -153,7 +202,9 @@ export class ApiComponent implements OnInit {
       }, 2500 );
     });
 
-
+    } else {
+      this.errform = true;
+    }
 
   }
 
